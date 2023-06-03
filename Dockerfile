@@ -10,13 +10,10 @@ RUN go mod download
 # Copy the code into the container.
 COPY . .
 RUN go get -u github.com/swaggo/swag/cmd/swag
-RUN echo $PATH
-RUN export PATH=$(go env GOPATH)/bin:$PATH
-RUN echo $PATH
-RUN swag init
 
 # Set necessary environment variables needed for our image and build the API server.
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+RUN swag init
 RUN go build -ldflags="-s -w" -o apiserver .
 
 FROM scratch
