@@ -1,0 +1,250 @@
+basePath: /api
+definitions:
+  entity.AttendanceReq:
+    properties:
+      emp_no:
+        example: "00015"
+        type: string
+      latitude:
+        example: "-6.242304"
+        type: string
+      longitude:
+        example: "106.8957696"
+        type: string
+      selfie:
+        type: string
+    required:
+    - emp_no
+    - latitude
+    - longitude
+    type: object
+  entity.BaseResponse:
+    properties:
+      data: {}
+      errors: {}
+      msg: {}
+      msg_id:
+        type: string
+      status_code:
+        type: integer
+    type: object
+  entity.LoginReq:
+    properties:
+      email:
+        example: admin@email.com
+        type: string
+      password:
+        example: 1veG+hbzZNStOA6rUSvwVw==
+        type: string
+    required:
+    - email
+    - password
+    type: object
+info:
+  contact:
+    email: your@mail.com
+    name: API Support
+  description: This is an auto-generated API Docs.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: API
+  version: "1.0"
+paths:
+  /v1/attendance:
+    post:
+      consumes:
+      - application/json
+      description: for Create Attendance
+      parameters:
+      - description: form add attendance
+        in: body
+        name: Attendance
+        required: true
+        schema:
+          $ref: '#/definitions/entity.AttendanceReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+      summary: Attendance
+      tags:
+      - Attendance
+  /v1/attendance/{emp_no}:
+    get:
+      consumes:
+      - application/json
+      description: for Get Attendance Get Today by Emp No
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 10)
+        in: query
+        name: pagesize
+        type: integer
+      - description: 'sort order by column. ex: check_in asc. field name with space
+          then asc/desc'
+        in: query
+        name: order
+        type: string
+      - description: emp_no
+        in: path
+        name: emp_no
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+      summary: Attendance
+      tags:
+      - Attendance
+  /v1/attendance/get-today/{emp_no}:
+    get:
+      consumes:
+      - application/json
+      description: for Get Attendance Get Today by Emp No
+      parameters:
+      - description: emp_no
+        in: path
+        name: emp_no
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+      summary: Attendance
+      tags:
+      - Attendance
+  /v1/employee/{emp_no}:
+    get:
+      consumes:
+      - application/json
+      description: Get Employee by emp_no.
+      parameters:
+      - description: emp_no
+        in: path
+        name: emp_no
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+      summary: get Employee by emp_no.
+      tags:
+      - Employee
+  /v1/login:
+    post:
+      consumes:
+      - application/json
+      description: for Login
+      parameters:
+      - description: form login
+        in: body
+        name: Authentication
+        required: true
+        schema:
+          $ref: '#/definitions/entity.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+      summary: Login
+      tags:
+      - Authentication
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
