@@ -13,7 +13,6 @@ RUN go get -u github.com/swaggo/swag/cmd/swag
 
 # Set necessary environment variables needed for our image and build the API server.
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
-RUN $GOPATH/bin/swag init
 RUN go build -ldflags="-s -w" -o apiserver .
 
 FROM scratch
