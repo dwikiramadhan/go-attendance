@@ -1,7 +1,5 @@
 FROM golang:1.20 AS builder
 
-LABEL maintainer="Vic Shóstak <vic@shostak.dev> (https://shostak.dev/)"
-
 # Move to working directory (/build).
 WORKDIR /build
 
@@ -11,6 +9,7 @@ RUN go mod download
 
 # Copy the code into the container.
 COPY . .
+RUN swag init
 
 # Set necessary environment variables needed for our image and build the API server.
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
