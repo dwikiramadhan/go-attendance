@@ -10,11 +10,11 @@ type AttendanceReq struct {
 }
 
 type AttendanceClassified struct {
-	ComeIn             string `json:"come_in"`
-	ComeOut            string `json:"come_out"`
-	AdmissionTimeLimit string `json:"admission_time_limit"`
-	LateCount          int32  `json:"late_count"`
-	Selfie             []byte `json:"selfie"`
+	ComeIn             *time.Time `json:"come_in"`
+	ComeOut            *time.Time `json:"come_out"`
+	AdmissionTimeLimit string     `json:"admission_time_limit"`
+	LateCount          int32      `json:"late_count"`
+	Selfie             []byte     `json:"selfie"`
 }
 
 type AttendanceList struct {

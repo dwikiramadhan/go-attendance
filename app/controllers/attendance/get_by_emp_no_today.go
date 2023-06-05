@@ -39,14 +39,14 @@ func GetAttendanceByEmpNoToday(c *fiber.Ctx) (err error) {
 	var attClassified entity.AttendanceClassified
 	for i := 0; i < len(foundedUser); i++ {
 		if i == 0 {
-			attClassified.ComeIn = foundedUser[i].CheckIn.String()
+			attClassified.ComeIn = foundedUser[i].CheckIn
 			attClassified.AdmissionTimeLimit = *foundedUser[i].AdmissionTimeLimit
 			attClassified.LateCount = *foundedUser[i].LateCount
 			attClassified.Selfie = foundedUser[i].Selfie
 		}
 
 		if i > 0 && i == len(foundedUser)-1 {
-			attClassified.ComeOut = foundedUser[i].CheckIn.String()
+			attClassified.ComeOut = foundedUser[i].CheckIn
 		}
 	}
 
