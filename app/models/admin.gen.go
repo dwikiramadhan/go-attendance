@@ -13,6 +13,7 @@ type Admin struct {
 	AdminEmail    string  `gorm:"column:admin_email;not null" json:"admin_email"`
 	AdminPassword string  `gorm:"column:admin_password;not null" json:"admin_password"`
 	EmpNo         *string `gorm:"column:emp_no" json:"emp_no"`
+	Role          *string `gorm:"column:role" json:"role"`
 }
 
 // TableName Admin's table name
