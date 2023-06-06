@@ -81,3 +81,29 @@ func GetAttendanceByEmpNo(page, pagesize int, order, emp_no string) (result []en
 	// Return query result.
 	return result, totalRows, nil
 }
+
+// GetAttendances method for getting admin user by Email.
+func GetAttendances(page, pagesize int, order string) (result []entity.AttendanceList, totalRows int64, err error) {
+	resultOrm := DB.Model(&model.Attendance{})
+
+	if order != "" {
+		resultOrm = resultOrm.Order(order)
+	}
+
+	resultOrm.Count(&totalRows)
+
+	if page > 0 {
+		offset := (page - 1) * pagesize
+		resultOrm = resultOrm.Offset(offset).Limit(pagesize)
+	} else {
+		resultOrm = resultOrm.Limit(pagesize)
+	}
+
+	if err := resultOrm.Debug().Find(&result).Error; err != nil {
+		// Return empty object and error.
+		err = ErrNotFound
+		return nil, -1, err
+	}
+	// Return query result.
+	return result, totalRows, nil
+}

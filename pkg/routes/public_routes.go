@@ -16,6 +16,7 @@ func PublicRoutes(a *fiber.App) {
 	//AUTH
 	route.Post("/login", authentication.Login) // auth, return Access & Refresh tokens
 	route.Post("/attendance", attendance.CreateAttendance)
+	route.Get("/attendances", attendance.GetAttendances)
 	route.Get("/attendance/get-today/:emp_no", attendance.GetAttendanceByEmpNoToday)
 	route.Get("/attendance/:emp_no", attendance.GetAttendanceByEmpNo)
 	route.Get("/employee/:emp_no", employee.GetEmpByEmpNo)
