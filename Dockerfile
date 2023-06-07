@@ -16,14 +16,15 @@ COPY . .
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
 RUN go build -ldflags="-s -w" -o apiserver .
 
-# FROM scratch
+# ENV TZ=Asia/Jakarta
+# RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+# CMD timedatectl
+
+FROM scratch
 
 # Copy binary and config files from /build to root folder of scratch container.
 COPY --from=builder ["/build/apiserver", "/build/.env", "/"]
 
-ENV TZ=Asia/Jakarta
-RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
-CMD timedatectl
 
 # Command to run when starting the container.
 ENTRYPOINT ["/apiserver"]
