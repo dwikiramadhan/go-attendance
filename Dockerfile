@@ -3,6 +3,7 @@ FROM golang:1.20 AS builder
 LABEL maintainer="Vic Shóstak <vic@shostak.dev> (https://shostak.dev/)"
 
 ENV TZ="Asia/Jakarta"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 CMD date
 
 # Move to working directory (/build).
