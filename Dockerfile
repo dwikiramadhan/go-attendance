@@ -25,6 +25,10 @@ FROM scratch
 # Copy binary and config files from /build to root folder of scratch container.
 COPY --from=builder ["/build/apiserver", "/build/.env", "/"]
 
+# Set the timezone to Asia/Jakarta
+ENV TZ=Asia/Jakarta
+RUN echo $TZ > /etc/timezone
+COPY --from=builder /usr/share/zoneinfo/$TZ /etc/localtime
 
 # Command to run when starting the container.
 ENTRYPOINT ["/apiserver"]
