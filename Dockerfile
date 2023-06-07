@@ -21,7 +21,7 @@ FROM scratch
 # Copy binary and config files from /build to root folder of scratch container.
 COPY --from=builder ["/build/apiserver", "/build/.env", "/"]
 
-# RUN sudo apt install tzdata -y
+RUN sudo apt install tzdata -y
 ENV TZ="Asia/Jakarta"
 
 # Command to run when starting the container.
