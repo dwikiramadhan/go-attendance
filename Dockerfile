@@ -2,9 +2,9 @@ FROM golang:1.20 AS builder
 
 LABEL maintainer="Vic Shóstak <vic@shostak.dev> (https://shostak.dev/)"
 
-ENV TZ="Asia/Jakarta"
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-CMD date
+ENV TZ=Asia/Jakarta
+RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+CMD timedatectl
 
 # Move to working directory (/build).
 WORKDIR /build
