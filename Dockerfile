@@ -2,10 +2,6 @@ FROM golang:1.20 AS builder
 
 LABEL maintainer="Vic Shóstak <vic@shostak.dev> (https://shostak.dev/)"
 
-ENV TZ=Asia/Jakarta
-RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
-CMD timedatectl
-
 # Move to working directory (/build).
 WORKDIR /build
 
@@ -25,6 +21,9 @@ FROM scratch
 # Copy binary and config files from /build to root folder of scratch container.
 COPY --from=builder ["/build/apiserver", "/build/.env", "/"]
 
+ENV TZ=Asia/Jakarta
+RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+CMD timedatectl
 
 # Command to run when starting the container.
 ENTRYPOINT ["/apiserver"]
