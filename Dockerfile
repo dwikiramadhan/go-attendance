@@ -16,17 +16,13 @@ COPY . .
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
 RUN go build -ldflags="-s -w" -o apiserver .
 
-ENV TZ=Asia/Jakarta
-RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-# CMD timedatectl
-
 FROM scratch
 
 # Copy binary and config files from /build to root folder of scratch container.
 COPY --from=builder ["/build/apiserver", "/build/.env", "/"]
 
-# Set the timezone to Asia/Jakarta
-ENV TZ=Asia/Jakarta
+# Copy the timezone file from the builder stage to the container
+COPY --from=builder /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # Command to run when starting the container.
 ENTRYPOINT ["/apiserver"]
