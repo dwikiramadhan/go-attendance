@@ -20,4 +20,6 @@ func PublicRoutes(a *fiber.App) {
 	route.Get("/attendance/get-today/:emp_no", attendance.GetAttendanceByEmpNoToday)
 	route.Get("/attendance/:emp_no", attendance.GetAttendanceByEmpNo)
 	route.Get("/employee/:emp_no", employee.GetEmpByEmpNo)
+	route.Get("/employees", employee.GetEmployees)
+	route.Post("/employee", employee.CreateEmployee)
 }
