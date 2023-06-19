@@ -28,6 +28,19 @@ definitions:
       status_code:
         type: integer
     type: object
+  entity.EmployeeReq:
+    properties:
+      admin_email:
+        type: string
+      admin_name:
+        type: string
+      admin_password:
+        type: string
+      emp_no:
+        type: string
+      role:
+        type: string
+    type: object
   entity.LoginReq:
     properties:
       email:
@@ -214,6 +227,44 @@ paths:
       summary: Attendance
       tags:
       - Attendance
+  /v1/employee:
+    post:
+      consumes:
+      - application/json
+      description: Create a new Employee.
+      parameters:
+      - description: create Employee
+        in: body
+        name: Emloyee
+        required: true
+        schema:
+          $ref: '#/definitions/entity.EmployeeReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: create a new Employee
+      tags:
+      - Employee
   /v1/employee/{emp_no}:
     get:
       consumes:
@@ -247,6 +298,49 @@ paths:
               $ref: '#/definitions/entity.BaseResponse'
             type: array
       summary: get Employee by emp_no.
+      tags:
+      - Employee
+  /v1/employees:
+    get:
+      consumes:
+      - application/json
+      description: for Get Employees
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 10)
+        in: query
+        name: pagesize
+        type: integer
+      - description: 'sort order by column. ex: check_in asc. field name with space
+          then asc/desc'
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            items:
+              $ref: '#/definitions/entity.BaseResponse'
+            type: array
+      summary: Employee
       tags:
       - Employee
   /v1/login:
